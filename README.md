@@ -1,4 +1,4 @@
-# ft_linear_regression 📉🚗  
+# ft_linear_regression 
 **An introduction to machine learning through linear regression**  
 
 > Predict the price of a car based on its mileage using gradient descent and simple linear regression.
@@ -27,7 +27,7 @@ It serves as an introduction to **machine learning fundamentals**, written from 
 
 ## ▌How it works  
 
-### 🧠 Hypothesis function  
+### ■ Hypothesis function  
 The model is based on the simple linear formula:  
 ```text
 estimatePrice(mileage) = theta0 + theta1 * mileage
@@ -37,19 +37,19 @@ Training is performed using gradient descent to minimize the cost between predic
 ```
 
 
-## 📊 Training formulas
+## ■ Training formulas
 ```txt
 theta0 -= learningRate * (1/m) * Σ(estimatePrice(x_i) - y_i)
 theta1 -= learningRate * (1/m) * Σ((estimatePrice(x_i) - y_i) * x_i)
 ```
 
 ## ▌Getting Started
-### ✅ Requirements
+### ■ Requirements
 ▸ Python 3.x
 ▸ matplotlib (optional, for plotting bonus)
 ▸ No use of libraries like numpy.polyfit or sklearn is allowed
 
-### 🚀 Installation & Usage
+### ■ Installation & Usage
 1. Clone the repository
 ```bash
 git clone https://github.com/ai-dg/ft_linear_regression.git
@@ -64,7 +64,7 @@ python3 train.py
 python3 predict.py
 ```
 
-## ▌Bonus Features 🌟
+## ▌Bonus Features
 ✔️ Graph showing the dataset points and the trained regression line
 ✔️ Model evaluation (e.g. mean squared error)
 ✔️ Robust error handling for inputs
