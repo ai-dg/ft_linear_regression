@@ -65,11 +65,10 @@ python3 predict.py
 ```
 
 ## ▌Bonus Features
-
-✔️ Graph showing the dataset points and the trained regression line
-✔️ Model evaluation (e.g. mean squared error)
-✔️ Robust error handling for inputs
-✔️ Reusable model saved as JSON
+▸Graph showing the dataset points and the trained regression line
+▸ Model evaluation (e.g. mean squared error)
+▸ Robust error handling for inputs
+▸ Reusable model saved as JSON
 
 These are only evaluated if the core program works flawlessly.
 
