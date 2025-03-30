@@ -65,6 +65,7 @@ python3 predict.py
 ```
 
 ## ▌Bonus Features
+
 ✔️ Graph showing the dataset points and the trained regression line
 ✔️ Model evaluation (e.g. mean squared error)
 ✔️ Robust error handling for inputs
