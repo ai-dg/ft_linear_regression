@@ -116,13 +116,20 @@ python3 prediction.py
 $ python3 model.py
 Iteration 0: theta0 = 0.076, theta1 = 0.029
 ...
-Iteration 9000: theta0 = 1.02528, theta1 = -0.62095
-Entraînement terminé. Paramètres sauvegardés.
-MAE (Erreur absolue moyenne) : 557.84 €
+Iteration: 9995/10000 - MSE = 0.006484555564514827
+Iteration: 9996/10000 - MSE = 0.006484555564514827
+Iteration: 9997/10000 - MSE = 0.006484555564514827
+Iteration: 9998/10000 - MSE = 0.006484555564514827
+Iteration: 9999/10000 - MSE = 0.006484555564514827
+Iteration: 10000/10000 - MSE = 0.006484555564514827
+
+Final result after 10000 iterations
+θ0: 1.0252834318375312
+θ1: -0.6209591389636161
 
 $ python3 prediction.py
-Enter mileage: 50000
-Estimated price: €11,378.24
+Enter your mileage: 5000
+Price predicted (5000.0 km): 8392.35
 ```
 
 ---
