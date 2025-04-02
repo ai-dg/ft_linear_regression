@@ -1,32 +1,48 @@
 import json
 
 
-def load_values_from_json(filename):
-    with open(filename) as file:
-        return json.load(file)
+def getting_data_json(path):
+    try:
+        with open(path) as file:
+            data = json.load(file)
+    except (FileExistsError, FileNotFoundError, json.JSONDecodeError):
+        print("Error coming from JSON file.")
+        exit(1)
+    return data
 
 
-def prediction(mileage):
-    params = load_values_from_json("values.json")
-    theta0 = params["theta0"]
-    theta1 = params["theta1"]
-    max_km = params["max_km"]
-    max_price = params["max_price"]
-    mileage_norm = mileage / max_km
-    price_norm = theta0 + theta1 * mileage_norm
-    price = price_norm * max_price
-    return price
+def getting_price_from_predictions(path, mileage):
+    try:
+        estimated_price = 0
+        data = getting_data_json(path)
+        theta0 = data["theta0"]
+        theta1 = data["theta1"]
+        max_km = data["max_km"]
+        max_price = data["max_price"]
+        if max_km == 0 or max_price == 0:
+            print("Error: max_km or max_price is zero. Cannot scale mileage.")
+            exit(1)
+        mileage_scaling = mileage / max_km
+        price_scaling = theta0 + theta1 * mileage_scaling
+        estimated_price = price_scaling * max_price
+    except (KeyError, ValueError):
+        print("Error coming from JSON file.")
+        exit(1)
+    return estimated_price
 
 
 def main():
+    path = "./values.json"
     try:
-        mileage = float(input("Entrez le kilométrage : "))
-    except ValueError:
-        print("Erreur : Entrée invalide.")
+        mileage = float(input("Enter your mileage: "))
+    except (KeyError, ValueError, KeyboardInterrupt):
+        print("Try again, not valid values")
         return
-
-    price = prediction(mileage)
-    print(f"Prix estimé pour {mileage:.1f} km : {price:.2f}")
+    if mileage < 0:
+        print("Mileage must be a positive number.")
+        return
+    price = getting_price_from_predictions(path, mileage)
+    print(f"Price predicted ({mileage:.1f} km): {price:.2f}")
 
 
 if __name__ == "__main__":
