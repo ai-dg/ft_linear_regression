@@ -32,13 +32,15 @@ It serves as an introduction to **machine learning fundamentals**, written from 
 
 ## ▌How it works  
 
-### ■ Hypothesis function  
-The model is based on the simple linear formula:  
+### ■ Method Used
+The model is trained using **simple linear regression** with **gradient descent optimization**. The objective is to minimize the **Mean Squared Error (MSE)** between predicted and actual prices.
+
+### ■ Hypothesis function
 ```text
 estimatePrice(mileage) = theta0 + theta1 * mileage
 
-Initially, theta0 and theta1 are set to 0.
-Training is performed using gradient descent to minimize the cost between predicted and actual prices.
+- Initially, theta0 and theta1 are set to 0.
+- Training is performed using gradient descent to minimize the cost between predicted and actual prices.
 ```
 
 
@@ -84,23 +86,19 @@ These are only evaluated if the core program works flawlessly.
 ## ▌Example
 ```bash
 $ python3 model.py
-Iteration 0: theta0 = 0.07637917169280257, theta1 = 0.029297473131115127
-Iteration 1000: theta0 = 1.0173886034482678, theta1 = -0.602942073159048
-Iteration 2000: theta0 = 1.0251243843996598, theta1 = -0.6205961712063829
-Iteration 3000: theta0 = 1.025280227703613, theta1 = -0.6209518266967988
-Iteration 4000: theta0 = 1.0252833672877795, theta1 = -0.6209589916523539
-Iteration 5000: theta0 = 1.0252834305371366, theta1 = -0.6209591359959374
-Iteration 6000: theta0 = 1.0252834318113435, theta1 = -0.6209591389038507
-Iteration 7000: theta0 = 1.0252834318370123, theta1 = -0.6209591389624312
-Iteration 8000: theta0 = 1.0252834318375283, theta1 = -0.6209591389636094
-Iteration 9000: theta0 = 1.0252834318375312, theta1 = -0.6209591389636161
-Entraînement terminé. Paramètres sauvegardés.
-Export des prédictions terminé dans 'data_model.csv'.
-MAE (Erreur absolue moyenne) : 557.84 €
+...
+Iteration: 9997/10000 - MSE = 0.006484555564514827
+Iteration: 9998/10000 - MSE = 0.006484555564514827
+Iteration: 9999/10000 - MSE = 0.006484555564514827
+Iteration: 10000/10000 - MSE = 0.006484555564514827
+
+Final result after 10000 iterations
+θ0: 1.0252834318375312
+θ1: -0.6209591389636161
 
 $ python3 prediction.py
-Enter mileage: 50000
-Estimated price: €11,378.24
+Enter your mileage: 5000
+Price predicted (5000.0 km): 8392.35
 ```
 
 ## 📜 License
