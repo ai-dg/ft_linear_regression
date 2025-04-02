@@ -1,7 +1,8 @@
 # ft_linear_regression 
 
-<img src="https://github.com/user-attachments/assets/8adbc6ec-3d00-47f4-9b45-54802938e013" width="500">
+<img src="https://github.com/user-attachments/assets/866e813c-1b79-4d84-b42e-78e6e0158870" width="500">
 
+<img src="https://github.com/user-attachments/assets/f2294f05-e9b6-4f62-9d3c-d4e58a44cade" width="500">
 
 **An introduction to machine learning through linear regression**  
 
