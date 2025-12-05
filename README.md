@@ -1,9 +1,5 @@
 # ft_linear_regression 
 
-<img src="https://github.com/user-attachments/assets/866e813c-1b79-4d84-b42e-78e6e0158870" width="500">
-
-<img src="https://github.com/user-attachments/assets/f2294f05-e9b6-4f62-9d3c-d4e58a44cade" width="500">
-
 **An introduction to machine learning through linear regression**
 
 > Predict the price of a car based on its mileage using gradient descent and simple linear regression.
