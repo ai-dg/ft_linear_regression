@@ -17,6 +17,15 @@ It serves as an introduction to **machine learning fundamentals**, written from 
 
 📘 Inspired by 42's AI curriculum: **you'll build and train your own model step-by-step**.
 
+<div align="center">
+
+| Prediction line | Loss function curve |
+|:---:|:---:|
+| <img src="https://github.com/user-attachments/assets/866e813c-1b79-4d84-b42e-78e6e0158870" alt="Prediction line" width="500"> | <img src="https://github.com/user-attachments/assets/f2294f05-e9b6-4f62-9d3c-d4e58a44cade" alt="Loss function curve" width="500"> |
+
+</div>
+
+
 ---
 
 ## ▌Features
