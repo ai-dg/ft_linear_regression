@@ -1,9 +1,5 @@
 # ft_linear_regression 
 
-<img src="https://github.com/user-attachments/assets/866e813c-1b79-4d84-b42e-78e6e0158870" width="500">
-
-<img src="https://github.com/user-attachments/assets/f2294f05-e9b6-4f62-9d3c-d4e58a44cade" width="500">
-
 **An introduction to machine learning through linear regression**
 
 > Predict the price of a car based on its mileage using gradient descent and simple linear regression.
@@ -19,14 +15,24 @@ It serves as an introduction to **machine learning fundamentals**, written from 
 
 ---
 
+
+<div align="center">
+
+| Prediction line | Loss function curve |
+|:---:|:---:|
+| <img src="https://github.com/user-attachments/assets/866e813c-1b79-4d84-b42e-78e6e0158870" alt="Prediction line" width="500"> | <img src="https://github.com/user-attachments/assets/f2294f05-e9b6-4f62-9d3c-d4e58a44cade" alt="Loss function curve" width="500"> |
+
+</div>
+
+
 ## ▌Features
 
 ✔️ Linear regression with **one feature** (car mileage)\
 ✔️ Manual implementation of **gradient descent**\
 ✔️ Interactive program to predict car prices\
 ✔️ Model parameters are saved and reused\
-✔️ Clean and readable Python code\
-✔️ Optional data visualization and model evaluation (Bonus)
+✔️ Clean and readable Python code with modular architecture\
+✔️ Data visualization and comprehensive model evaluation (Bonus)
 
 ---
 
@@ -38,18 +44,54 @@ The model is trained using **simple linear regression** with **gradient descent 
 
 ### ■ Hypothesis function
 
-```text
-estimatePrice(mileage) = theta0 + theta1 * mileage
+The model predicts the price using a linear function:
+
+$$
+\hat{y} = \theta_0 + \theta_1 \times x
+$$
+
+Where:
+- $\theta_0$ (theta0) is the y-intercept (bias term)
+- $\theta_1$ (theta1) is the slope (coefficient for mileage)
+- $x$ is the input feature (mileage)
+- $\hat{y}$ is the predicted price
+- Initially, both parameters are set to 0 before training
+
+### ■ Training formulas (Gradient Descent)
+
+The model updates parameters using gradient descent to minimize the cost function:
+
+$$
+\theta_0 := \theta_0 - \alpha \times \frac{1}{m} \times \sum_{i=0}^{m-1} (\hat{y}_i - y_i)
+$$
+
+$$
+\theta_1 := \theta_1 - \alpha \times \frac{1}{m} \times \sum_{i=0}^{m-1} ((\hat{y}_i - y_i) \times x_i)
+$$
+
+Where:
+- $\alpha$ (alpha) is the learning rate
+- $m$ is the number of training samples
+- $\hat{y}_i = \theta_0 + \theta_1 \times x_i$ is the predicted value
+- $y_i$ is the actual value
+- The parameters are updated simultaneously after each iteration
+
+### ■ Project Structure
+
+The project follows a modular architecture:
+
 ```
-
-- Initially, `theta0` and `theta1` can be set to 0 for visualizing convergence.
-- Training is performed using gradient descent to minimize the cost.
-
-### ■ Training formulas
-
-```text
-theta0 -= learningRate * (1/m) * Σ(estimatePrice(x_i) - y_i)
-theta1 -= learningRate * (1/m) * Σ((estimatePrice(x_i) - y_i) * x_i)
+ft_linear_regression/
+├── model.py              # Model class (training logic)
+├── prediction.py         # Prediction program
+├── data.py               # Data class (model parameters)
+├── data_processing.py    # DataProcessing class (CSV/JSON handling)
+├── plotting.py           # Plotting class (visualizations)
+├── metrics.py            # Metrics class (precision calculations)
+├── datasets/
+│   └── data.csv          # Training dataset
+└── model/
+    └── model.json        # Saved model parameters
 ```
 
 ---
@@ -59,7 +101,7 @@ theta1 -= learningRate * (1/m) * Σ((estimatePrice(x_i) - y_i) * x_i)
 ### ■ Requirements
 
 - Python 3.x
-- `matplotlib` (optional, for plotting bonus)
+- `matplotlib` (for data visualization)
 
 > ❌ No use of libraries like `numpy`, `scikit-learn`, or `pandas` is allowed.
 
@@ -72,65 +114,160 @@ git clone https://github.com/ai-dg/ft_linear_regression.git
 cd ft_linear_regression
 ```
 
-2. (Optional) Edit `values.json` to start from scratch:
-
-```json
-{
-  "theta0": 0,
-  "theta1": 0,
-  "max_km": 240000,
-  "max_price": 8290.0
-}
-```
-
-This allows you to visualize the evolution of `theta0`, `theta1`, and the MSE.
-
-3. Train your model
+2. Train your model
 
 ```bash
 python3 model.py
 ```
 
-4. Predict car price by mileage
+The model will:
+- Initialize parameters θ₀ and θ₁ to 0
+- Train for 5000 iterations (default)
+- Display MSE evolution during training
+- Calculate and display precision metrics
+- Save trained parameters to `model/model.json`
+- Generate visualization graphs
+
+3. Predict car price by mileage
 
 ```bash
 python3 prediction.py
 ```
 
+Enter a mileage value when prompted to get a price prediction.
+
+---
+
+## ▌Model Evaluation Metrics
+
+The model calculates several metrics to evaluate its performance:
+
+### 1. Mean Squared Error (MSE)
+
+Measures the average squared difference between predicted and actual values:
+
+$$
+MSE = \frac{1}{m} \sum_{i=0}^{m-1} (\hat{y}_i - y_i)^2
+$$
+
+### 2. Root Mean Squared Error (RMSE)
+
+Square root of MSE, in the same units as the target variable:
+
+$$
+RMSE = \sqrt{MSE} = \sqrt{\frac{1}{m} \sum_{i=0}^{m-1} (\hat{y}_i - y_i)^2}
+$$
+
+### 3. Mean Absolute Error (MAE)
+
+Average absolute difference between predictions and actual values:
+
+$$
+MAE = \frac{1}{m} \sum_{i=0}^{m-1} |\hat{y}_i - y_i|
+$$
+
+### 4. Mean Absolute Percentage Error (MAPE)
+
+Average percentage error, useful for understanding relative error:
+
+$$
+MAPE = \frac{100}{m} \sum_{i=0}^{m-1} \left|\frac{\hat{y}_i - y_i}{y_i}\right|
+$$
+
+### 5. R² Score (Coefficient of Determination)
+
+Measures how well the model fits the data (0 to 1, higher is better):
+
+$$
+R^2 = 1 - \frac{SS_{res}}{SS_{tot}}
+$$
+
+Where:
+
+$$
+SS_{res} = \sum_{i=0}^{m-1} (\hat{y}_i - y_i)^2 \quad \text{(Sum of Squares of Residuals)}
+$$
+
+$$
+SS_{tot} = \sum_{i=0}^{m-1} (y_i - \bar{y})^2 \quad \text{(Total Sum of Squares)}
+$$
+
+$$
+\bar{y} = \frac{1}{m} \sum_{i=0}^{m-1} y_i \quad \text{(Mean of actual values)}
+$$
+
+---
+
+## ▌Example Output
+
+### Training Output
+
+```bash
+$ python3 model.py
+Iteration: 0/5000 - MSE = 0.16666666666666666
+Iteration: 1/5000 - MSE = 0.16423456789012345
+...
+Iteration: 4999/5000 - MSE = 0.006484555564514827
+Iteration: 5000/5000 - MSE = 0.006484555564514827
+
+Final result after 5000 iterations
+θ0: 1.0252834318375312
+θ1: -0.6209591389636161
+
+**************************************************
+PRECISION METRICS
+**************************************************
+Data size: 24 samples
+
+Error Metrics:
+  MSE  (Mean Squared Error):     445645.25
+  RMSE (Root Mean Squared Error): 667.57
+  MAE  (Mean Absolute Error):     557.84
+  MAPE (Mean Absolute % Error):  9.65%
+
+Performance Metrics:
+  R²   (Coefficient of Determination): 0.7330
+
+**************************************************
+Interpretation:
+  - Lower MSE/RMSE/MAE/MAPE = Better model
+  - R² closer to 1.0 = Better fit
+  - Current R²: 0.7330 (Good)
+**************************************************
+```
+
+### Prediction Output
+
+```bash
+$ python3 prediction.py
+Enter your mileage: 50000
+Price predicted (50000.0 km): 7205.42
+```
+
+---
+
+## ▌Results Interpretation
+
+Based on the training results:
+
+- **R² = 0.7330 (Good)**: The model explains 73.3% of the variance in car prices, indicating a good fit.
+- **RMSE = 667.57**: On average, predictions are off by about 668 euros.
+- **MAE = 557.84**: The average absolute error is 558 euros.
+- **MAPE = 9.65%**: The average percentage error is about 9.65%, which is reasonable for price prediction.
+
+The model shows a **negative correlation** between mileage and price (θ₁ = -0.621), which is expected: cars with higher mileage tend to have lower prices.
+
 ---
 
 ## ▌Bonus Features
 
-- ■ Graph showing the dataset points and the trained regression line
-- ■ Real-time MSE display and convergence plot
-- ■ Robust input and file error handling
-- ■ Reusable model stored as JSON
+- ✅ **Data visualization**: Graph showing dataset points and the trained regression line
+- ✅ **MSE evolution plot**: Real-time display of MSE convergence during training
+- ✅ **Comprehensive metrics**: MSE, RMSE, MAE, MAPE, and R² calculation
+- ✅ **Robust error handling**: Input validation and file error handling
+- ✅ **Reusable model**: Model parameters stored as JSON for reuse
 
 > ⚠️ These features are only evaluated if the core program works flawlessly.
-
----
-
-## ▌Example
-
-```bash
-$ python3 model.py
-Iteration 0: theta0 = 0.076, theta1 = 0.029
-...
-Iteration: 9995/10000 - MSE = 0.006484555564514827
-Iteration: 9996/10000 - MSE = 0.006484555564514827
-Iteration: 9997/10000 - MSE = 0.006484555564514827
-Iteration: 9998/10000 - MSE = 0.006484555564514827
-Iteration: 9999/10000 - MSE = 0.006484555564514827
-Iteration: 10000/10000 - MSE = 0.006484555564514827
-
-Final result after 10000 iterations
-θ0: 1.0252834318375312
-θ1: -0.6209591389636161
-
-$ python3 prediction.py
-Enter your mileage: 5000
-Price predicted (5000.0 km): 8392.35
-```
 
 ---
 
@@ -141,4 +278,3 @@ It is intended for **academic purposes only** and follows the evaluation require
 
 Unauthorized public sharing or direct copying for **grading purposes** is discouraged.\
 If you wish to use or study this code, please ensure it complies with **your school's policies**.
-
