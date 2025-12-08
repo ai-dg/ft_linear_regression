@@ -4,15 +4,44 @@ from data import Data
 
 
 class DataProcessing():
+    """
+        Class to manage the data, imports/exports and return data structure
+    """
 
     def __init__(self, path_csv: str, path_json: str):
+        """
+            Logic:
+            - Initialize the class with the paths of models and datasets
+
+            Return:
+            - None
+        """
         self.path_csv = path_csv
         self.path_json = path_json
 
     def __str__(self):
-        return f"Path CSV: {self.path_csv}\nPath JSON: {self.path_json}"
+        """
+            Logic:
+            - Print datasets and json files
 
-    def ft_getting_max_values_from_data_csv(self) -> tuple[float, float, list[tuple[float, float]]]:
+            Return :
+            - str of paths
+        """
+        return (f"Path CSV: {self.path_csv}\nPath JSON: "
+                f"{self.path_json}")
+
+    def ft_getting_max_values_from_data_csv(
+            self) -> tuple[float, float, list[tuple[float, float]]]:
+        """
+            Logic:
+            - Open data with csv file and find the max_km and max_price values
+            - The data is normalized with max values
+
+            Return:
+            - max_value
+            - max_price
+            - data : list
+        """
         data: list[tuple[float, float]] = []
         max_km: float = 0.0
         max_price: float = 0.0
@@ -32,7 +61,8 @@ class DataProcessing():
                         max_price = price_value
 
                 if max_km == 0 or max_price == 0:
-                    raise ValueError("Max km or max price is zero, cannot normalize.")
+                    raise ValueError(
+                        "Max km or max price is zero, cannot normalize.")
 
                 for row in rows:
                     km = float(row["km"]) / max_km
@@ -45,8 +75,14 @@ class DataProcessing():
 
         return max_km, max_price, data
 
-
     def ft_import_data_from_json(self) -> Data:
+        """
+            Logic:
+            - It takes weights and biais from model.json
+
+            Return:
+            - data : Data()
+        """
         try:
             with open(self.path_json) as file:
                 json_data = json.load(file)
@@ -55,12 +91,20 @@ class DataProcessing():
             data.theta1 = json_data["theta1"]
             data.max_km = json_data["max_km"]
             data.max_price = json_data["max_price"]
-        except (FileExistsError, FileNotFoundError, json.JSONDecodeError, KeyError, ValueError):
+        except (FileExistsError, FileNotFoundError, json.JSONDecodeError,
+                KeyError, ValueError):
             print("Error coming from JSON file.")
             exit(1)
         return data
 
     def ft_save_formula_values_to_json(self, data: Data):
+        """
+            Logic:
+            - It saves the model values to the json values
+
+            Return:
+            - None
+        """
         try:
             with open(self.path_json, "w") as file:
                 json.dump(
@@ -73,7 +117,8 @@ class DataProcessing():
                     file,
                     indent=4,
                 )
-        except (FileExistsError, FileNotFoundError, json.JSONDecodeError, KeyError, ValueError):
+        except (FileExistsError, FileNotFoundError, json.JSONDecodeError,
+                KeyError, ValueError):
             print("Error saving values to JSON file.")
             exit(1)
 

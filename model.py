@@ -9,9 +9,20 @@ matplotlib.use("GTK3Agg")
 
 
 class Model():
+    """
+        Class to train the linear regression model
+    """
 
-    def __init__(self, data: Data, data_csv: list[tuple[float, float]], 
+    def __init__(self, data: Data, data_csv: list[tuple[float, float]],
                  learning_rate: float, iterations: int):
+        """
+            Logic:
+            - Initialize with data models and data_csv
+            - Learning rate and max epochs for training
+
+            Return:
+            - None
+        """
         self.data = data
         self.data_csv = data_csv
         self.learning_rate = learning_rate
@@ -26,6 +37,15 @@ class Model():
         }
 
     def ft_training_variables_model(self):
+        """
+            Logic:
+            - Calculation of weights for each epochs
+            - Calculation of mse to plot after
+            - Calculation of sums for precision calculations (errors)
+
+            Return:
+            - None
+        """
         m = len(self.data_csv)
         alpha = self.learning_rate
         mse_evolution = []
@@ -48,26 +68,33 @@ class Model():
                 if iteration == self.iterations:
                     y_true_denormalized = y_true * self.data.max_price
                     y_pred_denormalized = y_pred * self.data.max_price
-                    error_denormalized = y_pred_denormalized - y_true_denormalized
-                    
-                    self.sums_for_metrics["mse_denormalized_sum"] += error_denormalized**2
-                    self.sums_for_metrics["mae_sum"] += abs(error_denormalized)
-                    self.sums_for_metrics["total_actual"] += y_true_denormalized
+                    error_denormalized = (
+                        y_pred_denormalized - y_true_denormalized)
+
+                    self.sums_for_metrics["mse_denormalized_sum"] += (
+                        error_denormalized**2)
+                    self.sums_for_metrics["mae_sum"] += abs(
+                        error_denormalized)
+                    self.sums_for_metrics["total_actual"] += (
+                        y_true_denormalized)
                     self.sums_for_metrics["ss_res"] += error_denormalized**2
-      
+
                     if y_true_denormalized != 0:
-                        self.sums_for_metrics["mape_sum"] += abs(error_denormalized) / y_true_denormalized
+                        self.sums_for_metrics["mape_sum"] += (
+                            abs(error_denormalized) / y_true_denormalized)
 
             if iteration == self.iterations:
-                mean_actual = self.sums_for_metrics["total_actual"] / m
+                mean_actual = (self.sums_for_metrics["total_actual"] / m)
                 for i in range(m):
-                    y_true_denormalized = self.data_csv[i][1] * self.data.max_price
-                    self.sums_for_metrics["ss_tot"] += (y_true_denormalized - mean_actual)**2
+                    y_true_denormalized = (
+                        self.data_csv[i][1] * self.data.max_price)
+                    self.sums_for_metrics["ss_tot"] += (
+                        (y_true_denormalized - mean_actual)**2)
 
-                
-
-            temp_theta0 = self.data.theta0 - alpha * (1 / m) * sum_theta0_errors
-            temp_theta1 = self.data.theta1 - alpha * (1 / m) * sum_theta1_errors
+            temp_theta0 = (self.data.theta0 - alpha * (1 / m) *
+                           sum_theta0_errors)
+            temp_theta1 = (self.data.theta1 - alpha * (1 / m) *
+                           sum_theta1_errors)
 
             self.data.theta0 = temp_theta0
             self.data.theta1 = temp_theta1
@@ -78,7 +105,7 @@ class Model():
 
         plotting = Plotting()
         plotting.ft_show_mse_progression(mse_evolution)
-        
+
         print(f"\nFinal result after {self.iterations} iterations")
         print("θ0:", self.data.theta0)
         print("θ1:", self.data.theta1)
@@ -87,11 +114,10 @@ class Model():
         metrics.ft_calculate_metrics()
         metrics.ft_display_precision_metrics()
 
-
-    data : Data
-    data_csv : list[tuple[float, float]]
-    learning_rate : float
-    iterations : int
+    data: Data
+    data_csv: list[tuple[float, float]]
+    learning_rate: float
+    iterations: int
 
 
 def main():
@@ -99,18 +125,19 @@ def main():
     path_json = "./model/model.json"
 
     data_processor = DataProcessing(path_csv, path_json)
-    max_km, max_price, data_csv = data_processor.ft_getting_max_values_from_data_csv()
+    max_km, max_price, data_csv = (
+        data_processor.ft_getting_max_values_from_data_csv())
     if not data_csv:
         print("No data found in CSV file.")
         exit(1)
     data = Data(theta0=0, theta1=0, max_km=max_km, max_price=max_price)
     data.ft_update_max_values(max_km, max_price)
-    
+
     learning_rate = 0.1
     iterations = 10000
     model = Model(data, data_csv, learning_rate, iterations)
     model.ft_training_variables_model()
-    
+
     plotting = Plotting(data, data_csv)
     plotting.ft_put_data_into_graph()
     data_processor.ft_save_formula_values_to_json(data)

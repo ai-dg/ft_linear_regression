@@ -6,14 +6,32 @@ matplotlib.use("GTK3Agg")
 
 
 class Plotting():
-    def __init__(self, data: Data = None, data_csv: list[tuple[float, float]] = None):
+    """
+        Class for plotting the data
+    """
+    def __init__(self, data: Data = None,
+                 data_csv: list[tuple[float, float]] = None):
+        """
+            Logic:
+            - Initialize with Data() and data_csv
+
+            Return:
+            - None
+        """
         self.data = data
         self.data_csv = data_csv
 
     def __str__(self):
-        return f"Plotting"
+        return "Plotting"
 
     def ft_show_mse_progression(self, mse_evolution: list[float]):
+        """
+            Logic:
+            - Take the list of mse errors of each epoch and plot it
+
+            Return:
+            - None
+        """
         plt.clf()
         plt.plot(mse_evolution)
         plt.xlabel("Iterations")
@@ -23,10 +41,19 @@ class Plotting():
         plt.savefig("./mse_evolution.png")
 
     def ft_put_data_into_graph(self):
+        """
+            Logic:
+            - Unnormalize data, and store in x and y lists
+            - Interpollation of X coordinates for line
+            - Calculation of predictions Y for line
+
+            Return:
+            - None
+        """
         if self.data is None or self.data_csv is None:
             print("Error: data and data_csv must be initialized.")
             return
-        
+
         x = []
         y = []
         for row in self.data_csv:
@@ -36,7 +63,10 @@ class Plotting():
         if x:
             x_min = min(x)
             x_max = max(x)
-            x_line = [x_min + (x_max - x_min) * i / 99 for i in range(100)]
+            x_line = []
+            for i in range(100):
+                point = x_min + (x_max - x_min) * i / 99 
+                x_line.append(point)
             y_pred = []
             for point in x_line:
                 x_reduced = point / self.data.max_km
