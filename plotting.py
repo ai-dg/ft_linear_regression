@@ -65,7 +65,7 @@ class Plotting():
             x_max = max(x)
             x_line = []
             for i in range(100):
-                point = x_min + (x_max - x_min) * i / 99 
+                point = x_min + (x_max - x_min) * i / 99
                 x_line.append(point)
             y_pred = []
             for point in x_line:
