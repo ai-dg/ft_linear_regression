@@ -1,5 +1,6 @@
 from data_processing import DataProcessing
 from data import Data
+import sys
 
 
 def ft_getting_price_from_predictions(data: Data, mileage: float) -> float:
@@ -12,16 +13,16 @@ def ft_getting_price_from_predictions(data: Data, mileage: float) -> float:
     """
     try:
         if data.max_km == 0 or data.max_price == 0:
-            print("Error: max_km or max_price is zero. Cannot scale "
-                  "mileage.")
-            exit(1)
+            price_scaling = (data.theta0 + data.theta1 * mileage)
+            estimated_price = price_scaling * data.max_price
+            return estimated_price
         mileage_scaling = mileage / data.max_km
         price_scaling = (data.theta0 + data.theta1 * mileage_scaling)
         estimated_price = price_scaling * data.max_price
         return estimated_price
     except (KeyError, ValueError):
         print("Error calculating price prediction.")
-        exit(1)
+        sys.exit(1)
 
 
 def main():
