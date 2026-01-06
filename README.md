@@ -14,9 +14,6 @@ It serves as an introduction to **machine learning fundamentals**, written from 
 📘 Inspired by 42's AI curriculum: **you'll build and train your own model step-by-step**.
 
 
----
-
-
 <div align="center">
 
 | Prediction line | Loss function curve |
@@ -25,6 +22,7 @@ It serves as an introduction to **machine learning fundamentals**, written from 
 
 </div>
 
+---
 
 ## ▌Features
 
